@@ -31,6 +31,15 @@ def check_collision():
 def game_over():
     pass
 
-def main():
-    pass
+def run():
+    window = tkinter.Tk()
+    window.title('Snake Game')
+    window.resizable(False, False)
 
+
+
+
+    window.mainloop()
+
+if __name__ == '__main__':
+    run()
