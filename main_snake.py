@@ -50,7 +50,7 @@ def run():
 
     window.geometry(f"{window_width}x{window_height}+{x_axis}+{y_axis}")
 
-    current_snake = Snake()
+    current_snake = Snake(canvas)
     food = Food(canvas)
 
 
@@ -59,8 +59,17 @@ def run():
 
 
 class Snake:
-    pass
+    def __init__(self, canvas):
+        self.body_size = BODY_SPACING
+        self.coordinates = []
+        self.squares = []
 
+        for i in range(BODY_SPACING):
+            self.coordinates.append([0,0])
+
+        for x,y in self.coordinates:
+            square = canvas.create_rectangle(x, y, x+SPACE_SIZE, y+SPACE_SIZE, fill=SNAKE_COLOR, tag='snake')
+            self.squares.append(square)
 class Food:
     def __init__(self, canvas):
         x = random.randint(0,int(GAME_WIDTH/SPACE_SIZE - 1) * SPACE_SIZE)
