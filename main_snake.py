@@ -11,11 +11,56 @@ FOOD_COLOR = '#FF0000'
 BACKGROUND = '#000000'
 
 
+class Snake:
+    def __init__(self, canvas):
+        self.body_size = BODY_SPACING
+        self.coordinates = []
+        self.squares = []
+
+        for i in range(BODY_SPACING):
+            self.coordinates.append([0,0])
+
+        for x,y in self.coordinates:
+            square = canvas.create_rectangle(x, y, x+SPACE_SIZE, y+SPACE_SIZE, fill=SNAKE_COLOR, tag='snake')
+            self.squares.append(square)
+
+    def get_coordinates(self):
+        return self.coordinates
+
+    def insert_coordinates(self, index, value):
+        self.coordinates.insert(index, value)
+
+    def get_squares(self):
+        return self.squares
+
+    def insert_square(self, index, value):
+        self.squares.insert(index, value)
+
+class Food:
+    def __init__(self, canvas):
+        x = random.randint(0,int(GAME_WIDTH/SPACE_SIZE - 1) * SPACE_SIZE)
+        y = random.randint(0,int(GAME_HEIGHT/SPACE_SIZE - 1) * SPACE_SIZE)
+        self.coordinates = (x,y)
+        canvas.create_oval(x, y, x + SPACE_SIZE, y + SPACE_SIZE, fill = FOOD_COLOR, tag= 'food')
 
 
+def next_turn(snake, food, direction):
+    x,y = snake.get_coordinates()[0]
 
-def next_turn():
-    pass
+    if direction == 'up':
+        y -= SPACE_SIZE
+    elif direction == 'down':
+        y += SPACE_SIZE
+    elif direction == 'left':
+        x -= SPACE_SIZE
+    else:
+        x += SPACE_SIZE
+
+    snake.insert_coordinates(0, (x,y))
+
+    square = tkinter.canvas.create_rectangle(x,y,x+SPACE_SIZE,y + SPACE_SIZE, fill=SNAKE_COLOR, )
+    snake.insert_square(0, square)
+    tkinter.window.after(SPEED, next_turn, snake, food)
 
 def change_direction(new_direction):
     pass
@@ -50,32 +95,11 @@ def run():
 
     window.geometry(f"{window_width}x{window_height}+{x_axis}+{y_axis}")
 
-    current_snake = Snake(canvas)
+    snake = Snake(canvas)
     food = Food(canvas)
-
+    next_turn(snake, food, direction)
 
     window.mainloop()
-
-
-
-class Snake:
-    def __init__(self, canvas):
-        self.body_size = BODY_SPACING
-        self.coordinates = []
-        self.squares = []
-
-        for i in range(BODY_SPACING):
-            self.coordinates.append([0,0])
-
-        for x,y in self.coordinates:
-            square = canvas.create_rectangle(x, y, x+SPACE_SIZE, y+SPACE_SIZE, fill=SNAKE_COLOR, tag='snake')
-            self.squares.append(square)
-class Food:
-    def __init__(self, canvas):
-        x = random.randint(0,int(GAME_WIDTH/SPACE_SIZE - 1) * SPACE_SIZE)
-        y = random.randint(0,int(GAME_HEIGHT/SPACE_SIZE - 1) * SPACE_SIZE)
-        self.coordinates = (x,y)
-        canvas.create_oval(x, y, x + SPACE_SIZE, y + SPACE_SIZE, fill = FOOD_COLOR, tag= 'food')
 
 
 if __name__ == '__main__':
