@@ -36,6 +36,11 @@ def run():
     window.title('Snake Game')
     window.resizable(False, False)
 
+    score = 0
+    direction = 'down'
+    score_label = tkinter.Label(window, text="Score: {}".format(score), font=('consolas', 40))
+    score_label.pack()
+
 
 
 
