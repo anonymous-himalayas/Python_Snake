@@ -4,7 +4,7 @@ import random
 GAME_WIDTH = 700
 GAME_HEIGHT = 700
 SPEED = 40
-SPACE_SIZE = 40
+SPACE_SIZE = 50
 BODY_SPACING = 3
 SNAKE_COLOR = '#00FF00'
 FOOD_COLOR = '#FF0000'
@@ -13,11 +13,6 @@ BACKGROUND = '#000000'
 
 
 
-class Snake:
-    pass
-
-class Food:
-    pass
 
 def next_turn():
     pass
@@ -55,7 +50,24 @@ def run():
 
     window.geometry(f"{window_width}x{window_height}+{x_axis}+{y_axis}")
 
+    current_snake = Snake()
+    food = Food(canvas)
+
+
     window.mainloop()
+
+
+
+class Snake:
+    pass
+
+class Food:
+    def __init__(self, canvas):
+        x = random.randint(0,int(GAME_WIDTH/SPACE_SIZE - 1) * SPACE_SIZE)
+        y = random.randint(0,int(GAME_HEIGHT/SPACE_SIZE - 1) * SPACE_SIZE)
+        self.coordinates = (x,y)
+        canvas.create_oval(x, y, x + SPACE_SIZE, y + SPACE_SIZE, fill = FOOD_COLOR, tag= 'food')
+
 
 if __name__ == '__main__':
     run()
