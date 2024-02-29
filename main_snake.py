@@ -46,6 +46,8 @@ class Food:
         self.coordinates = (x,y)
         canvas.create_oval(x, y, x + SPACE_SIZE, y + SPACE_SIZE, fill = FOOD_COLOR, tag= 'food')
 
+    def get_coordinates(self):
+        return self.coordinates
 
 def next_turn(snake, food):
     x,y = snake.get_coordinates()[0]
@@ -64,14 +66,26 @@ def next_turn(snake, food):
     square = canvas.create_rectangle(x,y,x+SPACE_SIZE,y + SPACE_SIZE, fill=SNAKE_COLOR, )
     snake.insert_square(0, square)
 
+    if x == food.get_coordinates()[0] and y == food.get_coordinates()[1]:
+        global score
 
+        score += 1
+        score_label.config(text="Score:{}".format(score))
 
+        canvas.delete("food")
 
-    del snake.coordinates[-1]
-    canvas.delete(snake.get_squares()[-1])
-    snake.delete_square(-1)
+        food = Food(canvas)
 
-    window.after(SPEED, next_turn, snake, food)
+    else:
+
+        del snake.coordinates[-1]
+        canvas.delete(snake.get_squares()[-1])
+        snake.delete_square(-1)
+
+    if check_collision(snake):
+        game_over()
+    else:
+        window.after(SPEED, next_turn, snake, food)
 
 def change_direction(new_direction):
 
