@@ -1,10 +1,10 @@
 import tkinter
 import random
 
-GAME_WIDTH = 700
+GAME_WIDTH = 1000
 GAME_HEIGHT = 700
 SPEED = 70
-SPACE_SIZE = 50
+SPACE_SIZE = 25
 BODY_SPACING = 3
 SNAKE_COLOR = '#00FF00'
 FOOD_COLOR = '#FF0000'
@@ -41,8 +41,18 @@ class Snake:
 
 class Food:
     def __init__(self, canvas):
-        x = random.randint(0, int(GAME_WIDTH/SPACE_SIZE) - 1) * SPACE_SIZE
-        y = random.randint(0, int(GAME_HEIGHT/SPACE_SIZE) - 1) * SPACE_SIZE
+        flag = False
+        while True:
+            x = random.randint(0, int(GAME_WIDTH/SPACE_SIZE) - 1) * SPACE_SIZE
+            y = random.randint(0, int(GAME_HEIGHT/SPACE_SIZE) - 1) * SPACE_SIZE
+            for value in snake.get_coordinates():
+                if x == value[0] and y == value[1]:
+                    continue
+                else:
+                    flag = True
+                    break
+            if flag:
+                break
         self.coordinates = (x,y)
         canvas.create_oval(x, y, x + SPACE_SIZE, y + SPACE_SIZE, fill = FOOD_COLOR, tag= 'food')
 
@@ -107,7 +117,7 @@ def change_direction(new_direction):
 
 def check_collision(snake):
     x, y = snake.get_coordinates()[0]
-    if x < 0 or x >= GAME_WIDTH - 50 or y < 0 or y >= GAME_HEIGHT - 50:
+    if x < 0 or x >= GAME_WIDTH or y < 0 or y >= GAME_HEIGHT:
         return True
 
     for body in snake.get_coordinates()[1:]:
@@ -117,7 +127,8 @@ def check_collision(snake):
     return False
 
 def game_over():
-    pass
+    canvas.delete(tkinter.ALL)
+    canvas.create_text(window_width/2, window_height/2, font=('consolas', 70), text = "GAME OVER", fill = "red", tag = "GameOver")
 
 
 window = tkinter.Tk()
