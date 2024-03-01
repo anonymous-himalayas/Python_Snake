@@ -1,11 +1,11 @@
 import tkinter
 import random
 
-GAME_WIDTH = 1000
-GAME_HEIGHT = 700
-SPEED = 70
-SPACE_SIZE = 25
-BODY_SPACING = 3
+GAME_WIDTH = 600
+GAME_HEIGHT = 600
+SPEED = 100
+SPACE_SIZE = 50
+BODY_SPACING = 10
 SNAKE_COLOR = '#00FF00'
 FOOD_COLOR = '#FF0000'
 BACKGROUND = '#000000'
@@ -41,23 +41,28 @@ class Snake:
 
 class Food:
     def __init__(self, canvas):
-        flag = False
         while True:
-            x = random.randint(0, int(GAME_WIDTH/SPACE_SIZE) - 1) * SPACE_SIZE
-            y = random.randint(0, int(GAME_HEIGHT/SPACE_SIZE) - 1) * SPACE_SIZE
-            for value in snake.get_coordinates():
-                if x == value[0] and y == value[1]:
-                    continue
-                else:
+            x,y = self._get_random_coordinates()
+            flag = False
+            for _ in snake.get_coordinates():
+                if (x,y) in snake.get_coordinates():
+                    print(True)
                     flag = True
                     break
-            if flag:
+                else:
+                    continue
+            if not flag:
                 break
         self.coordinates = (x,y)
         canvas.create_oval(x, y, x + SPACE_SIZE, y + SPACE_SIZE, fill = FOOD_COLOR, tag= 'food')
 
     def get_coordinates(self):
         return self.coordinates
+
+    def _get_random_coordinates(self):
+        x = random.randint(0, int(GAME_WIDTH / SPACE_SIZE) - 1) * SPACE_SIZE
+        y = random.randint(0, int(GAME_HEIGHT / SPACE_SIZE) - 1) * SPACE_SIZE
+        return (x,y)
 
 def next_turn(snake, food):
     x,y = snake.get_coordinates()[0]
@@ -128,7 +133,10 @@ def check_collision(snake):
 
 def game_over():
     canvas.delete(tkinter.ALL)
-    canvas.create_text(window_width/2, window_height/2, font=('consolas', 70), text = "GAME OVER", fill = "red", tag = "GameOver")
+    canvas.create_text(window_width/2, window_height/2 - 50, font=('consolas', 70), text = "GAME OVER",
+                       fill = "red", tag = "GameOver")
+
+
 
 
 window = tkinter.Tk()
