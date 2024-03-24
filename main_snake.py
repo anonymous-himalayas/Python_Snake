@@ -138,39 +138,39 @@ def game_over():
 
 
 
+if __name__ == '__main__':
+    window = tkinter.Tk()
+    window.title('Snake Game')
+    window.resizable(False, False)
 
-window = tkinter.Tk()
-window.title('Snake Game')
-window.resizable(False, False)
+    score = 0
+    direction = 'down'
+    score_label = tkinter.Label(window, text="Score: {}".format(score), font=('consolas', 40))
+    score_label.pack()
 
-score = 0
-direction = 'down'
-score_label = tkinter.Label(window, text="Score: {}".format(score), font=('consolas', 40))
-score_label.pack()
+    canvas = tkinter.Canvas(window, bg = BACKGROUND, width=GAME_WIDTH, height= GAME_HEIGHT)
+    canvas.pack()
 
-canvas = tkinter.Canvas(window, bg = BACKGROUND, width=GAME_WIDTH, height= GAME_HEIGHT)
-canvas.pack()
+    window.update()
+    window_width = window.winfo_width()
+    window_height = window.winfo_height()
+    screen_width = window.winfo_screenwidth()
+    screen_height = window.winfo_screenheight()
 
-window.update()
-window_width = window.winfo_width()
-window_height = window.winfo_height()
-screen_width = window.winfo_screenwidth()
-screen_height = window.winfo_screenheight()
+    x_axis = int((screen_width / 2) - (window_width / 2))
+    y_axis = int((screen_height / 2) - (window_height / 2))
 
-x_axis = int((screen_width / 2) - (window_width / 2))
-y_axis = int((screen_height / 2) - (window_height / 2))
+    window.geometry(f"{window_width}x{window_height}+{x_axis}+{y_axis}")
 
-window.geometry(f"{window_width}x{window_height}+{x_axis}+{y_axis}")
+    window.bind('<Left>', lambda event: change_direction('left'))
+    window.bind('<Right>', lambda event: change_direction('right'))
+    window.bind('<Up>', lambda event: change_direction('up'))
+    window.bind("<Down>", lambda event: change_direction('down'))
 
-window.bind('<Left>', lambda event: change_direction('left'))
-window.bind('<Right>', lambda event: change_direction('right'))
-window.bind('<Up>', lambda event: change_direction('up'))
-window.bind("<Down>", lambda event: change_direction('down'))
+    snake = Snake(canvas)
+    food = Food(canvas)
+    next_turn(snake, food)
 
-snake = Snake(canvas)
-food = Food(canvas)
-next_turn(snake, food)
-
-window.mainloop()
+    window.mainloop()
 
 
