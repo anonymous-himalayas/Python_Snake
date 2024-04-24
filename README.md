@@ -5,7 +5,7 @@ Python game that runs the snake game.
 ## Built with:
 <div align="left">
   <img src=https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=fff&style=for-the-badge)>
-  <img src=https://img.shields.io/badge/pygame?logo=python>
+  <img src=https://www.pygame.org/ftp/pygame-badge-SMA-unscaled.png>
 </div>
 
 Feel free to change the constants as necessary!
