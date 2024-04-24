@@ -12,3 +12,9 @@ Feel free to change the constants as necessary!
 * Body Spacing changes the amount of "bodies" you have to start with
 * Speed changes how fast the snake moves (decreasing makes it faster, increasing makes it slower)
 * Body Spacing changes how many squares there are on the playing board
+
+## Current High Score:
+56 (Himal)
+
+If you get a higher score DM me on LinkedIn and it will
+be changed but not for long ;)
