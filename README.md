@@ -14,7 +14,7 @@ Feel free to change the constants as necessary!
 * Body Spacing changes how many squares there are on the playing board
 
 ## Current High Score:
-56 (Himal)
+70 (Himal)
 
 If you get a higher score DM me on LinkedIn and it will
 be changed but not for long ;)
